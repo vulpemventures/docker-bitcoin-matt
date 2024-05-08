@@ -29,6 +29,6 @@ COPY --from=builder /bitcoin/src/bitcoin-cli /usr/local/bin/
 
 EXPOSE 18443 18444
 
-COPY bitcoin.conf /root/.bitcoin/bitcoin.conf
+VOLUME /root/.bitcoin
 
-CMD ["bitcoind", "-printtoconsole"]
+ENTRYPOINT ["bitcoind", "-printtoconsole"]

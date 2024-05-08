@@ -1,4 +1,7 @@
-# README.md
+# Bitcoin Core with opcodes for MATT
+
+This repository is a fork of [bitcoin-matt docker image](https://github.com/Merkleize/docker) that expect a volume to be mounted for the Bitcoin data directory, to being able to side load the `bitcoin.conf` at runtime instead of being shipped inside the container at buildtime.
+
 
 ## Bitcoin + MATT Docker Container
 
@@ -32,12 +35,15 @@ docker build -t bitcoin_matt .
 docker pull bigspider/bitcoin_matt
 ```
 
-
 ### Run the Docker Container
 
+Before running the Docker container, ensure that you have a Bitcoin data directory on your host machine. This directory should contain your `bitcoin.conf` file and will be used to persist data across container restarts.
+
 ```bash
-docker run -d -p 18443:18443 bigspider/bitcoin_matt
+docker run -d -p 18443:18443 -v /path/to/your/bitcoin/data:/root/.bitcoin bigspider/bitcoin_matt
 ```
+
+Replace `/path/to/your/bitcoin/data` with the actual path to your Bitcoin data directory on your host machine. This will mount the directory into the container at `/root/.bitcoin`.
 
 Exposing port 18443 allows interacting with it using `bitcoin-cli -regtest` as normal, as long as a recent version of `bitcoin-cli` is in the path.
 
